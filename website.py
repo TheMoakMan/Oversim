@@ -16,7 +16,6 @@ def login_page():
     desc = "Login fields to come, please stay tuned."
     return render_template('login.html', title = title, description = desc)
 
-
 @app.route('/teams')
 def teams_page():
     return "Teams"

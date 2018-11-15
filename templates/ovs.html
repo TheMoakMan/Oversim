@@ -4,25 +4,26 @@
     <meta charset="utf-8">
     <title>{{title}}</title>
     
-    <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' 
-          rel='stylesheet' type='text/css'>
     
     <style type="text/css">
+     @font-face{font-family: BigNoodleTitling; src: url('big_noodle_titling.ttf');}
+     @font-face{font-family: BigNoodleTitlingOblique; src: url('big_noodle_titling_oblique.ttf');}
+
      body
       {
-        background-color:rgba(200, 240, 24, 0.603);
+        background-color:rgba(177, 160, 12, 0.87);
       }
 
-      h2
+      h1
       {
-        font-size:48px;
+        font-size:24px;
         margin-top:0;
-        font-family:Arial, sans-serif;
-        text-shadow:2px 0 15px #292929;
-        letter-spacing:4px;
+        font-family:BigNoodleTitling;
+        letter-spacing:2px;
         text-decoration:none;
-        color:#DDD;
+        color:rgb(12, 12, 12);
       }
+
 
       #banner
       {
@@ -37,18 +38,42 @@
 
       .lead
       {
+        font-size:24px;
+        font-style: oblique;
         background-color:rgba(255,255,255,0.6);
         border-radius:3px;
         box-shadow:rgba(0,0,0,0.2) 0 1px 3px;
-        font-family:Sintony, sans-serif;
+        font-family:BigNoodleTitling;
       }
-    </style>    
 
-</head>
+      .styled {
+       border: 0;
+       line-height: 2.5;
+       padding: 0 20px;
+       font-size: 1rem;
+       text-align: center;
+       color: #fff;
+       text-shadow: 1px 1px 1px #000;
+       border-radius: 10px;
+       background-color: rgba(220, 0, 0, 1);
+       background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+       box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                   inset -2px -2px 3px rgba(0, 0, 0, .6);
+      }
+
+    </style>
+
+    <button stype="button">Login
+    </button>
+
+  </head>
 
   <body>
     <div id="banner">  
-      <h2>{{description}}</h2>
+      <h1>{{description}}</h2>
       <p class="lead">Gonna mess around with css later more</p>
     </div>  
 
