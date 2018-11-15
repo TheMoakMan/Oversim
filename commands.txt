@@ -5,7 +5,13 @@ Use web browser and navigate to local host website shown
 Webpages up and running:
 	/
 	/login
+	/play
+	/teams
+	/players
+	/heroes
+	/account
 	/static/test.txt
 	/static/doug.jpg
+	
 
 
