@@ -1,0 +1,11 @@
+To run: $python websity.py
+
+Use web browser and navigate to local host website shown
+
+Webpages up and running:
+	/
+	/login
+	/static/test.txt
+	/static/doug.jpg
+
+
