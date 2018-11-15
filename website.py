@@ -6,13 +6,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
-    title = "Oversim, Fantasy Overwatch Simulator"
-    desc = functions.desc()
+    title = functions.site_title()
+    desc = functions.site_desc()
     return render_template('ovs.html', title = title, description = desc)
 
 @app.route('/login')
 def login_page():
-    return "Please enter a username and password:"
+    title = functions.site_title()
+    desc = "Login fields to come, please stay tuned."
+    return render_template('login.html', title = title, description = desc)
+
 
 @app.route('/teams')
 def teams_page():
