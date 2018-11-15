@@ -3,3 +3,6 @@ http://opentechschool.github.io/python-flask/
 
 -----MYSQL IN PYTHON-----
 https://www.w3schools.com/python/python_mysql_getstarted.asp
+
+-----HTML-----
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element
