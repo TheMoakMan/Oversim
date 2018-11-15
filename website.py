@@ -1,9 +1,14 @@
-from flask import Flask
+from flask import Flask, render_template
+import functions
+
+
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return "Welcome to Oversim Fantasy Overwatch Simulator"
+def home_page():
+    title = "Oversim, Fantasy Overwatch Simulator"
+    desc = functions.desc()
+    return render_template('ovs.html', title = title, description = desc)
 
 @app.route('/login')
 def login_page():
@@ -28,7 +33,7 @@ def players_page():
 @app.route('/heroes')
 def heroes_page():
     return "All heroes up to patch 0.0.0"
-
+   
 if __name__ == '__main__':
     app.run()
 
