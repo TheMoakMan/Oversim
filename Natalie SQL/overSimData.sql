@@ -11,14 +11,14 @@ We include all heroes and their abilites.
 
 /*------------------------------------User------------------------------------*/
 -- Insert users into the user table
-INSERT INTO User VALUES ('admin', '1234', TRUE), ('user', '1234', FALSE);
+INSERT INTO Users VALUES ('10KGeese', 'Bobross', 1), ('Doug', 'Leeland', 0);
 
 /*------------------------------------Team------------------------------------*/
 -- Insert professional teams into the team table
 INSERT INTO Team VALUES
-  (1, 'Los Angeles', 'Gladiators', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/CHTRRZCBEYGN1507822882862.svg', 0, 0, TRUE, 0, 'admin'),
-  (2, 'London', 'Spitfire', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/HCS229B4DP021507822883016.svg', 0, 0, TRUE, 0, 'admin'),
-  (3, 'Dallas', 'Fuel', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/YX6JZ6FR89LU1507822882865.svg', 0, 0, TRUE, 0, 'admin');
+  (1, 'Los Angeles', 'Gladiators', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/CHTRRZCBEYGN1507822882862.svg', 0, 0, 1, 0, 'admin'),
+  (2, 'London', 'Spitfire', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/HCS229B4DP021507822883016.svg', 0, 0, 1, 0, 'admin'),
+  (3, 'Dallas', 'Fuel', 'https://bnetcmsus-a.akamaihd.net/cms/template_resource/YX6JZ6FR89LU1507822882865.svg', 0, 0, 1, 0, 'admin');
   --should num_players be calculated by joining is_on table and counting them? not sure how we'll increase the number ----------------------------------------?
 
 /*------------------------------COMPETES_AGAINST------------------------------*/
@@ -59,7 +59,7 @@ INSERT INTO IS_ON VALUES
   ('Shaz', 1),
   ('Hydration', 1),
   ('BigGoose', 1);
-  UPDATE Team SET num_players = 6 WHERE (ID == 1);
+  UPDATE Team SET num_players = 6 WHERE (ID = 1);
 -- London Spitfire players
 INSERT INTO IS_ON VALUES
   ('Gesture', 2),
@@ -68,7 +68,7 @@ INSERT INTO IS_ON VALUES
   ('NUS', 2),
   ('Fury', 2),
   ('Profit', 2);
-  UPDATE Team SET num_players = 6 WHERE (ID == 2);
+  UPDATE Team SET num_players = 6 WHERE (ID = 2);
 -- Dallas Fuel players
 INSERT INTO IS_ON VALUES
   ('Mickie', 3),
@@ -77,7 +77,7 @@ INSERT INTO IS_ON VALUES
   ('Unkoe', 3),
   ('Taimou', 3),
   ('EFFECT', 3);
-  UPDATE Team SET num_players = 6 WHERE (ID == 3);
+  UPDATE Team SET num_players = 6 WHERE (ID = 3);
 
 /*------------------------------------Hero------------------------------------*/
 -- Insert heroes into the hero table
@@ -182,7 +182,7 @@ INSERT INTO Ability VALUES
   ('Ana', 'Biotic Rifle', 'Shoot to heal allies or damage enemies.'),
   ('Ana', 'Sleep Dart', 'Put an enemy to sleep.'),
   ('Ana', 'Biotic Grenade', 'Prevent enemy healing and increase ally healing.'),
-  ('Ana', 'Nano Boost', 'Increase an ally\'s damage and decrease damage taken.'),
+  ('Ana', 'Nano Boost', 'Increase an ally''s damage and decrease damage taken.'),
   --Brigitte
   ('Brigitte', 'Rocket Flail', 'Swing a mace to damage enemies.'),
   ('Brigitte', 'Repair Pack', 'Heal an ally, overhealing becomes armor.'),
@@ -216,8 +216,8 @@ INSERT INTO Ability VALUES
 -- Damage dealer abilities
 INSERT INTO Ability VALUES
   -- Bastion
-  ('Bastion', 'Configuration: Recon', 'Mobile form with a submachine gun.'),
-  ('Bastion', 'Configuration: Sentry', 'Stationary form with gatling gun.'),
+  ('Bastion', 'Configuration:Recon', 'Mobile form with a submachine gun.'),
+  ('Bastion', 'Configuration:Sentry', 'Stationary form with gatling gun.'),
   ('Bastion', 'Reconfigure', 'Transition between recon and sentry mode.'),
   ('Bastion', 'Self-repair', 'Restore own health but unable to deal damage.'),
   ('Bastion', 'Configuration: Tank', 'Transform into a tank and shoot explosives.'),
@@ -226,7 +226,7 @@ INSERT INTO Ability VALUES
   ('Doomfist', 'Seismic Slam', 'Slam forward to knock enemies toward self.'),
   ('Doomfist', 'Rising Uppercut', 'Knock enemies into the air.'),
   ('Doomfist', 'Rocket Punch', 'Charge up and launch forward to damage enemies hit.'),
-  ('Doomfist', 'The Best Defense', 'Gain temporary shields when dealing damage.')
+  ('Doomfist', 'The Best Defense', 'Gain temporary shields when dealing damage.'),
   ('Doomfist', 'Meteor Strike', 'Jump into the sky and choose a location to land, dealing damage.'),
   -- Genji
   ('Genji', 'Shuriken', 'Throw three throwing stars in succession or in a spread.'),
@@ -294,7 +294,7 @@ INSERT INTO Ability VALUES
   ('Tracer', 'Recall', 'Rewind time to previous health, ammo, and position.'),
   ('Tracer', 'Pulse Bomb', 'Throw a sticky bomb that explodes after a short time.'),
   -- Widowmaker
-  ('Widowmaker', 'Widow\'s Kiss', 'Fire a machine gun, scope-in to snipe.'),
+  ('Widowmaker', 'Widow''s Kiss', 'Fire a machine gun, scope-in to snipe.'),
   ('Widowmaker', 'Grappling Hook', 'Pull self toward a targeted location.'),
   ('Widowmaker', 'Venom Mine', 'Deploy a mine that deals damage over time when touched.'),
   ('Widowmaker', 'Infra-Sight', 'Reveal all enemies to self and allies.');
@@ -361,7 +361,7 @@ INSERT INTO COUNTERS VALUES
   ('Soldier: 76', 'Orisa'),
   ('Sombra', 'Mei'),
   ('Symmetra', 'Winston'),
-  ('Torbjorn', 'Roaghog'),
+  ('Torbjorn', 'Roadhog'),
   ('Tracer', 'McCree'),
   ('Widowmaker', 'Genji'),
   -- Tanks

@@ -7,19 +7,24 @@ Table Initializations for the OverSim database
 */
 
 -- Create a constant for standard max and min string length
-SET @MAX_CHAR = 20;
-SET @MAX_FILE_PATH = 200;
-SET @MIN_CHAR = 3;
+DECLARE 20 INT
+DECLARE 200 INT
+DECLARE 3 INT
+SET 20 = 20;
+SET 200 = 200;
+SET 3 = 3;
 
-/*------------------------------------User------------------------------------*/
+/*------------------------------------Users------------------------------------*/
 -- Create a table to represent a user of the application with the following variables:
 -- username: primary key, unique ID for each user, check length <= 20 & >= 5
 -- password: not null, log in verification for users, , check length <= 20 & >= 5
 -- is_admin: denote the user as an administrator or as a general user, admins given special privileges
-CREATE TABLE User (
-  username VARCHAR(@MAX_CHAR) check(username <= @MAX_CHAR AND username >= @MIN_CHAR),
-  password VARCHAR(@MAX_CHAR) NOT NULL check(username <= @MAX_CHAR AND username >= @MIN_CHAR),
-  is_admin BOOLEAN NOT NULL default(false),
+-- NOTE: Table originally named User but MySQL would not allow, now called USERS
+
+CREATE TABLE Users (
+  username VARCHAR(20) check(len(username) <= 20 AND len(username) >= 3),
+  password VARCHAR(20) NOT NULL check(len(password) <= 20 AND len(password) >= 3),
+  is_admin BIT NOT NULL default(0),
   PRIMARY KEY(username)
 );
 
@@ -39,14 +44,14 @@ CREATE TABLE User (
 -- OWNER: foreign key to primary key of user, indicates which user created the team
 CREATE TABLE Team (
   ID INTEGER check(ID >= 0),
-  city VARCHAR(@MAX_CHAR) NOT NULL check(username <= @MAX_CHAR AND username >= @MIN_CHAR),
-  mascot VARCHAR(@MAX_CHAR) NOT NULL check(username <= @MAX_CHAR AND username >= @MIN_CHAR),
-  logo VARCHAR(@MAX_FILE_PATH) default('https://wiki.gamedetectives.net/images/b/bf/Overwatch_logo.jpg'),
+  city VARCHAR(20) NOT NULL check(len(city) <= 20 AND len(city) >= 3),
+  mascot VARCHAR(20) NOT NULL check(len(mascot) <= 20 AND len(mascot) >= 3),
+  logo VARCHAR(200) default('https://wiki.gamedetectives.net/images/b/bf/Overwatch_logo.jpg'),
   num_wins INTEGER default(0) check(num_wins >= 0),
-  num_losses INTEGER default(0) check(num_wins >= 0),
-  is_pro BOOLEAN NOT NULL default(false),
+  num_losses INTEGER default(0) check(num_losses >= 0),
+  is_pro BIT NOT NULL default(0),
   num_players INTEGER default(0) check(num_players <= 6 AND num_players >= 0),
-  OWNER VARCHAR(@MAX_CHAR) REFERENCES User(username),
+  OWNER VARCHAR(20) REFERENCES Users(username),
   PRIMARY KEY(ID),
   UNIQUE(city, mascot)
 );
@@ -70,9 +75,9 @@ CREATE TABLE COMPETES_AGAINST (
 -- role: marks the player as someone who prefers damage dealer ('d'), healer ('h'), or tank ('t')
 -- photo: filepath for image to represent the player, not null, default value is blank profile picture
 CREATE TABLE Player (
-  battletag VARCHAR(@MAX_CHAR) check(battletag <= @MAX_CHAR AND battletag >= @MIN_CHAR),
-  role CHAR(1) NOT NULL check(role == 'd' OR role == 'h' OR role == 't'),
-  photo VARCHAR(@MAX_FILE_PATH) NOT NULL default('http://pm1.narvii.com/6737/db298b04acebf4d50363b36d92c9c8f50b67520cv2_00.jpg'),
+  battletag VARCHAR(20) check(len(battletag) <= 20 AND len(battletag) >= 3),
+  role CHAR(1) NOT NULL check(role = 'd' OR role = 'h' OR role = 't'),
+  photo VARCHAR(200) NOT NULL default('http://pm1.narvii.com/6737/db298b04acebf4d50363b36d92c9c8f50b67520cv2_00.jpg'),
   PRIMARY KEY(battletag)
 );
 
@@ -82,7 +87,7 @@ CREATE TABLE Player (
 -- player_battletag: reference to a player
 -- team_ID: reference to a team primary key
 CREATE TABLE IS_ON (
-  player_battletag VARCHAR(@MAX_CHAR) REFERENCES Player(battletag),
+  player_battletag VARCHAR(20) REFERENCES Player(battletag),
   team_ID INTEGER REFERENCES Team(ID),
   PRIMARY KEY(player_battletag, team_ID)
 );
@@ -100,11 +105,11 @@ CREATE TABLE IS_ON (
 -- Most values stored in hero are for the user's information
 -- They can research stats and pick the best heroes for their players
 CREATE TABLE Hero (
-  name VARCHAR(@MAX_CHAR) check(name <= @MAX_CHAR AND name >= @MIN_CHAR),
-  hero_win_rate FLOAT check(hero_win_rate <= 1 AND hero_win_rate >= 0),
-  hero_pick_rate FLOAT check(hero_pick_rate <= 1 AND hero_pick_rate >= 0),
-  photo VARCHAR(@MAX_FILE_PATH) UNIQUE NOT NULL,
-  role CHAR(1) NOT NULL check(role == 'd' OR role == 'h' OR role == 't'),
+  name VARCHAR(20) check(len(name) <= 20 AND len(name) >= 3),
+  hero_win_rate FLOAT check(hero_win_rate <= 1.0 AND hero_win_rate >= 0),
+  hero_pick_rate FLOAT check(hero_pick_rate <= 1.0 AND hero_pick_rate >= 0),
+  photo VARCHAR(200) UNIQUE NOT NULL,
+  role CHAR(1) NOT NULL check(role = 'd' OR role = 'h' OR role = 't'),
   healing INTEGER check(healing >= 0),
   damage INTEGER check(damage >= 0),
   block INTEGER check(block >= 0),
@@ -119,9 +124,9 @@ CREATE TABLE Hero (
 -- player_win_rate: average player win rate on a specific hero (used for calculations)
 -- avg_elims: average number of kills/assists a player gets on a specific hero (used for calculations)
 CREATE TABLE PLAYS (
-  player_battletag VARCHAR(@MAX_CHAR) REFERENCES Player(battletag),
-  hero_name VARCHAR(@MAX_CHAR) REFERENCES Hero(name),
-  player_win_rate FLOAT NOT NULL check(player_win_rate <= 1 AND player_win_rate >= 0),
+  player_battletag VARCHAR(20) REFERENCES Player(battletag),
+  hero_name VARCHAR(20) REFERENCES Hero(name),
+  player_win_rate FLOAT NOT NULL check(player_win_rate <= 1.0 AND player_win_rate >= 0),
   avg_elims FLOAT NOT NULL check(avg_elims >= 0),
   PRIMARY KEY(player_battletag, hero_name)
 );
@@ -133,9 +138,9 @@ CREATE TABLE PLAYS (
 -- team_ID: reference to a team
 -- hero_name: reference to a hero
 CREATE TABLE PLAYS_IN_MATCH (
-  player_battletag VARCHAR(@MAX_CHAR) REFERENCES Player(battletag),
+  player_battletag VARCHAR(20) REFERENCES Player(battletag),
   team_ID INTEGER REFERENCES Team(ID),
-  hero_name VARCHAR(@MAX_CHAR) REFERENCES Hero(name),
+  hero_name VARCHAR(20) REFERENCES Hero(name),
   PRIMARY KEY(player_battletag, team_ID, hero_name)
 );
 
@@ -145,9 +150,9 @@ CREATE TABLE PLAYS_IN_MATCH (
 -- ability_name: primary key in combination with hero_name
 -- ability_desc: brief description of ability
 CREATE TABLE Ability (
-  hero_name VARCHAR(@MAX_CHAR) REFERENCES Hero(name),
-  ability_name VARCHAR(@MAX_CHAR),
-  ability_desc VARCHAR(@MAX_FILE_PATH) default(''),
+  hero_name VARCHAR(20) REFERENCES Hero(name),
+  ability_name VARCHAR(20),
+  ability_desc VARCHAR(200) default(''),
   PRIMARY KEY(hero_name, ability_name)
 );
 
@@ -156,8 +161,8 @@ CREATE TABLE Ability (
 -- hero_name: reference to a hero, hero being played
 -- counter_name: reference to a hero, hero that is strong against/disadvantages another hero
 CREATE TABLE COUNTERS (
-  hero_name VARCHAR(@MAX_CHAR) REFERENCES Hero(name),
-  counter_name VARCHAR(@MAX_CHAR) REFERENCES Hero(name),
+  hero_name VARCHAR(20) REFERENCES Hero(name),
+  counter_name VARCHAR(20) REFERENCES Hero(name),
   PRIMARY KEY(hero_name, counter_name)
 );
 
@@ -173,7 +178,7 @@ Create Views to easily access data.
 -- username, password, is_admin
 CREATE VIEW User_OWNS_Teams AS
   SELECT username, ID, city, mascot  --add more variables if needed -------------------------------------?
-  FROM User, Team
+  FROM Users, Team
   WHERE username = OWNER;
 
 /*------------------------------Player+IS_ON+Team-----------------------------*/
@@ -185,10 +190,10 @@ CREATE VIEW User_OWNS_Teams AS
 -- needed? --------------------- might be better to calculate here and not store in team??
 
 CREATE VIEW Players_ON_Teams AS
-  SELECT battletag, ID, COUNT(*) as 'num_players'
+  SELECT battletag, ID, city, mascot, COUNT(*) as 'num_players'
   FROM Player, IS_ON, Team
   WHERE battletag = player_battletag AND ID = team_ID
-  GROUP BY ID;
+  GROUP BY ID, battletad, city, mascot;
 
 /*------------------------------Player+PLAYS+Hero-----------------------------*/
 --
@@ -198,9 +203,11 @@ CREATE VIEW Players_ON_Teams AS
 -- Hero: name, hero_win_rate, hero_pick_rate, photo, role, healing, damage, block
 -- Select team_IDs and the number of each role they have
 CREATE VIEW Player_Hero_Roles AS
-  SELECT team_ID, COUNT(Hero.role == 'h') as 'num_heal', COUNT(Hero.role == 'd') as 'num_dmg', COUNT(Hero.role == 't') as 'num_tank'
+  SELECT team_ID, COUNT(case when Hero.role = 'h' then 1 end) as 'num_heal', 
+				  COUNT(case when Hero.role = 'd'then 1 end) as 'num_dmg', 
+				  COUNT(case when Hero.role = 't' then 1 end) as 'num_tank'
   FROM Player, IS_ON, PLAYS, Hero
-  WHERE battletag = player_battletag AND hero_name = name
+  WHERE battletag = Plays.player_battletag AND hero_name = name
   GROUP BY team_ID;
 
 /*-------------------------------MATCH-------------------------------*/
