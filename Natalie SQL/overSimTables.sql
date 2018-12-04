@@ -210,6 +210,23 @@ CREATE VIEW Player_Hero_Roles AS
   WHERE battletag = Plays.player_battletag AND hero_name = name
   GROUP BY team_ID;
 
+/*-----------------------------All+Players+Teams---------------------------------*/
+CREATE view All_Players_ON_Teams AS
+select battletag,
+       photo,
+       city,
+	   mascot,
+	   role
+ from
+	(
+	  select * from Player, IS_ON
+	  where battletag = player_battletag
+	)PlayerTeamID
+,   Team
+where team_ID = ID AND is_pro = 1;
+
+
+
 /*-------------------------------MATCH-------------------------------*/
 -- Player: battletag, role, photo
 -- PLAYS: player_battletag, hero_name, player_win_rate, avg_elims
