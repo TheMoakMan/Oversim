@@ -39,6 +39,7 @@
     <Folder Include="FlaskWebProject1\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FlaskWebProject1\static\DougLogo.png" />
     <Content Include="FlaskWebProject1\static\OverSimLogo.png" />
     <Content Include="FlaskWebProject1\templates\account.html" />
     <Content Include="FlaskWebProject1\templates\big_noodle_titling.ttf" />
