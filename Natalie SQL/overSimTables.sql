@@ -181,7 +181,7 @@ CREATE VIEW User_OWNS_Teams AS
   FROM Users, Team
   WHERE username = OWNER;
 
-/*------------------------------Player+IS_ON+Team-----------------------------*/
+/*------------------------------Teams + All Their Players-----------------------------*/
 -- Create a view to easily see which players are on a team, mostly to clean up and get rid of extra attributes
 -- Player: battletag, role, photo
 -- IS_ON: player_battletag, team_ID
@@ -189,11 +189,25 @@ CREATE VIEW User_OWNS_Teams AS
 -- Attributes needed:------------------------------------------------------------------------------------------?
 -- needed? --------------------- might be better to calculate here and not store in team??
 
-CREATE VIEW Players_ON_Teams AS
-  SELECT battletag, ID, city, mascot, COUNT(*) as 'num_players'
-  FROM Player, IS_ON, Team
-  WHERE battletag = player_battletag AND ID = team_ID
-  GROUP BY ID, battletad, city, mascot;
+CREATE VIEW Teams_All_Players AS
+  select ID, Team, Player, role as Role, photo as PlayerPhoto, TeamLogo, Pro
+  from Player, 
+       (
+         select concat(city, ' ', mascot) as Team
+         ,      player_battletag as Player
+		 ,      logo as TeamLogo
+		 ,      is_pro as Pro
+		 ,      ID
+         from
+	     (
+	       select MIN(ID) as id, city, mascot, is_pro, logo, player_battletag
+	       from Team, IS_ON
+	       where ID = team_ID
+	       Group BY city, mascot, is_pro, player_battletag, logo
+	      )TeamsAlph
+        )AllTeamsPlayers
+  where battletag = Player
+
 
 /*------------------------------Player+PLAYS+Hero-----------------------------*/
 --
