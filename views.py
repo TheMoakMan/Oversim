@@ -6,10 +6,10 @@ from datetime import datetime
 from flask import Flask, render_template
 app = Flask(__name__)
 
-#import pypyodbc
+import pypyodbc
 
-#Create Connection Object for SQL Server Connection
-#connection = pypyodbc.connect("DRIVER={SQL SERVER}; Server=DESKTOP-LVNF7SR; Trusted_Connection=True; DATABASE=Oversim") 
+Create Connection Object for SQL Server Connection
+connection = pypyodbc.connect("Server=tcp:oversim.database.windows.net,1433;Initial Catalog=OverSim;Persist Security Info=False;User ID=jaden2555@yahoo.com;Password=*TheMoakMan2014;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;") 
 
 #Get current user from login table at somepoint from website
 curr_user = "Doug"
