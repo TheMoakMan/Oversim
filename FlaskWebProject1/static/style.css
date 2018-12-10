@@ -1,11 +1,12 @@
 /*-----------------------------Format for header------------------------------*/
+
 .header {
   background-image: url('https://www.maryfreebed.com/wp-content/uploads/2016/12/Textured-BKG_1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 200px;
+  height: 208px;
   border-bottom: 2px solid #ffffff;
-  font-family: 'Roboto';
+  font-family: 'BigNoodleTitling';
 }
 
 .icon {
@@ -15,6 +16,7 @@
 
 .title {
   color: #737373;
+  font-size: 45px
 }
 
 .header h3 {
@@ -29,11 +31,16 @@ text-decoration:none;
 .dropbutton {
   background-color: transparent;
   border: none;
+  position: relative;
+  top: 5px;
 }
 
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    left: -10px;
 }
 
 .dropContent {
@@ -71,6 +78,7 @@ table.bodyTable {
   width: 100%;
 }
 
+
 /* Logo */
 tbody.headTableBody tr:nth-child(1) td:nth-child(1){
   width: 110px;
@@ -81,7 +89,8 @@ tbody.headTableBody tr:nth-child(1) td:nth-child(1){
 /*"Fantasy Overwatch Simulator"*/
 tbody.headTableBody tr:nth-child(2) td:nth-child(1){
   position: relative;
-  top: -50px;
+  top: -60px;
+  font-size: 20px;
 }
 
 /*"OverSim"*/
@@ -89,12 +98,15 @@ tbody.headTableBody tr:nth-child(1) td:nth-child(2){
   height: 10px;
   text-align: left;
   vertical-align: top;
+  top: -15px;
 }
 
 /*"Welcome username"*/
 tbody.headTableBody tr:nth-child(1) td:nth-child(3){
   text-align: right;
   vertical-align: top;
+  font-size: 25px;
+  height: 10px;
 }
 
 /*Dropdown menu*/
@@ -117,11 +129,11 @@ tbody.bodyTableBody tr:nth-child(1) td:nth-child(2){
 
 /*------------------------------Format for tabs-------------------------------*/
 .tab a {
-  border: 2px solid #ffffff;
+  border: 1px solid #ffffff;
   background-color: #b3b3b3;
   color: #ffffff;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: 450;
 }
 
 .tab a:hover {

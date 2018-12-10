@@ -1,0 +1,113 @@
+{% include 'header.html' %}
+
+<!-- Display an informational message to the user -->
+<div class='body'>
+    <table class=bodyTable>
+        <tbody class=bodyTableBody>
+        <td>
+            <h1>Add Players</h1>
+            <!-- search bar -->
+            <form id=accountinfo method="POST" action="addplayers.html">
+                <select name="p0">
+                    {% for player in allPlayers %}
+                    <option value={{player[0]}}> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+                <select name="p1">
+                    {% for player in allPlayers %}
+                    <option value="{{player[0]}}"> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+                <select name="p2">
+                    {% for player in allPlayers %}
+                    <option value="{{player[0]}}"> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+                <select name="p3">
+                    {% for player in allPlayers %}
+                    <option value="{{player[0]}}"> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+                <select name="p4">
+                    {% for player in allPlayers %}
+                    <option value="{{player[0]}}"> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+                <select name="p5">
+                    {% for player in allPlayers %}
+                    <option value="{{player[0]}}"> {{player[0]}} </option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+            <input type="text" id="allTeams" onkeyup="findTeam()" placeholder="Search for players..." title="Type in a team">
+            <div class=list>
+                <ul id="myTeamUL">
+                    <!-- Loop through team names passed from flask: render_template('teams.html', teamTable = data)-->
+                    {% for team in teamTable %}
+                    <li>
+                        <a>
+                            <button class='collapsible'><img src={{team[3]}} width='50' height='50'> {{team[1]}} {{team[2]}}</button>
+                            <div class='content'>
+                                Wins: {{team[4]}} Losses: {{team[5]}}
+                                <!--  Loop though and output all players on each team. -->
+                                {% for player in teamPlayers %}
+                                {% if team[0] == player[0] %}
+                                <button class='collapsible'>
+                                    <img src={{player[3]}} width='30' height='30'>
+                                    {{player[1]}} {{player[2]}}
+                                </button>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </td>
+        <td>
+            <img src='/static/tracersimplelong2.png' width='100' height='480'>
+        </td>
+        </tbody>
+    </table>
+</div>
+<!-- javascript to find a team in the table-->
+<script>
+    function findTeam() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("allTeams");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myTeamUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+<!--script to open and close collapsible information-->
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+
+</html>
