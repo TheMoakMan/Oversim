@@ -6,14 +6,6 @@
         <tbody class=bodyTableBody>
         <td>
             <h1>Edit : {{teamname}}</h1>
-            <form method="POST" action="addToTeam.html">
-                <select name="selectPlayer">
-                    {% for player in allPlayers %}
-                    <option value="{{player[0]}}"> {{player[0]}} </option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Submit</button>
-            </form>
                 <div class=list>
                     <ul id="myTeamUL">
                         {% for player in playerTable %}

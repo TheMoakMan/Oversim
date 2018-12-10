@@ -141,6 +141,46 @@ def myteams():
           teamPlayers = teams_Players 
          )
 
+@app.route('/account.html')
+def accountInfo():
+    return render_template("account.html",
+                           username = functions.getUsername()
+                           )
+
+@app.route('/account.html', methods=['POST'])
+def newPass():
+    oldPass = request.form['oldPass']
+    newPass = request.form['newPass']
+
+    #Check if old password is in database
+    cursor = connection.cursor()
+    cursor.execute("select password from Users where username = \'" + functions.getUsername() + "\';")
+    passValidator = cursor.fetchall()
+    cursor.close()
+
+    print(passValidator)
+
+    if len(passValidator) != 0:
+        cursor = connection.cursor()
+        cursor.execute("update Users set password=\'" + newPass + "\' where username = \'" + functions.getUsername() + "\';" )
+        connection.commit()
+        cursor.close()
+        return redirect('/success.html')
+    
+    return redirect('/invalid.html')
+
+@app.route('/success.html')
+def successMsg():
+    return render_template('/success.html',
+                           username = functions.getUsername()
+                           )
+
+@app.route('/invalid.html')
+def errMsg():
+    return render_template('/invalid.html',
+                           username = functions.getUsername()
+                           )
+
 @app.route('/deleteTeam.html', methods=['GET'])
 def rmvTeam():
     id = request.args.get('id')
@@ -216,12 +256,18 @@ def rplcPlayer():
     oTag = request.args.get('oldTag')
     nTag = request.args.get('newTag')
 
+    print("IN REPLACE PLAYER")
     print([oTag, nTag])
 
     #Remove the older player and add the new player
     cursor= connection.cursor()
     cursor.execute("delete from IS_ON where team_ID = " + teamID + " and player_battletag = \'" + oTag + "\';")
-    cursor.execute("insert into IS_ON values (\'" + nTag + "\', " + teamID + ";)")
+    connection.commit()
+    cursor.close()
+
+    #Add new player
+    cursor= connection.cursor()
+    cursor.execute("insert into IS_ON values (\'" + nTag + "\', " + teamID + ");")
     connection.commit()
     cursor.close()
 
@@ -230,7 +276,7 @@ def rplcPlayer():
 
 @app.route('/login.html')
 def login():
-    """Renders the account page."""
+    """Renders the login page."""
     return render_template(
           "login.html",
           username = functions.getUsername()
@@ -250,7 +296,7 @@ def login_process():
 
 @app.route('/signup.html')
 def signupPage():
-    """Renders the account page."""
+    """Renders the signup page."""
     return render_template(
           "signup.html",
           username = functions.getUsername()
@@ -258,7 +304,7 @@ def signupPage():
 
 @app.route('/signup.html', methods=['POST'])
 def signup():
-    """Renders the account page."""
+    """Renders the signup page."""
     usrname = request.form['user']
     pssword = request.form['pass']
 
